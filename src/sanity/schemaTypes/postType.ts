@@ -24,6 +24,11 @@ export const postType = defineType({
       to: {type: 'author'},
     }),
     defineField({
+      name: "relatedPosts",
+      type: "array",
+      of: [{ type: "reference", to: { type: "post" } }],
+    }),
+    defineField({
       name: 'mainImage',
       type: 'image',
       options: {
