@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import { Hero } from "@/components/blocks/Hero";
-import { Features } from "@/components/blocks/Feature";
-import { SplitImage } from "@/components/blocks/SplitImage";
-import  FAQs  from "@/components/blocks/FAQ";
-import { PAGE_QUERYResult } from "@/sanity/types";
-import { client } from "@/sanity/lib/client";
-import { createDataAttribute } from "next-sanity";
-import { useOptimistic } from "next-sanity/hooks";
+import { Hero } from '@/components/blocks/Hero';
+import { Features } from '@/components/blocks/Feature';
+import { SplitImage } from '@/components/blocks/SplitImage';
+import FAQs from '@/components/blocks/FAQ';
+import { PAGE_QUERYResult } from '@/sanity/types';
+import { client } from '@/sanity/lib/client';
+import { createDataAttribute } from 'next-sanity';
+import { useOptimistic } from 'next-sanity/hooks';
 
 type PageBuilderProps = {
-  content: NonNullable<PAGE_QUERYResult>["content"];
+  content: NonNullable<PAGE_QUERYResult>['content'];
   documentId: string;
   documentType: string;
 };
@@ -20,7 +20,7 @@ const { projectId, dataset, stega } = client.config();
 export const createDataAttributeConfig = {
   projectId,
   dataset,
-  baseUrl: typeof stega.studioUrl === "string" ? stega.studioUrl : "",
+  baseUrl: typeof stega.studioUrl === 'string' ? stega.studioUrl : '',
 };
 
 export function PageBuilder({
@@ -29,7 +29,7 @@ export function PageBuilder({
   documentType,
 }: PageBuilderProps) {
   const blocks = useOptimistic<
-    NonNullable<PAGE_QUERYResult>["content"] | undefined,
+    NonNullable<PAGE_QUERYResult>['content'] | undefined,
     NonNullable<PAGE_QUERYResult>
   >(content, (state, action) => {
     if (action.id === documentId) {
@@ -50,7 +50,7 @@ export function PageBuilder({
         ...createDataAttributeConfig,
         id: documentId,
         type: documentType,
-        path: "content",
+        path: 'content',
       }).toString()}
     >
       {blocks.map((block) => {
@@ -67,26 +67,26 @@ export function PageBuilder({
           </div>
         );
 
-        switch ((block)._type) {
-          case "hero":
+        switch (block._type) {
+          case 'hero':
             return (
               <DragHandle key={block._key}>
                 <Hero {...block} />
               </DragHandle>
             );
-          case "features":
+          case 'features':
             return (
               <DragHandle key={block._key}>
                 <Features {...block} />
               </DragHandle>
             );
-          case "splitImage":
+          case 'splitImage':
             return (
               <DragHandle key={block._key}>
                 <SplitImage {...block} />
               </DragHandle>
             );
-          case "faqs":
+          case 'faqs':
             return (
               <DragHandle key={block._key}>
                 <FAQs {...block} />
@@ -94,7 +94,11 @@ export function PageBuilder({
             );
           default:
             // This is a fallback for when we don't have a block type
-            return <div key={(block as any)._key}>Block not found: {(block as any)._type}</div>;
+            return (
+              <div key={(block as any)._key}>
+                Block not found: {(block as any)._type}
+              </div>
+            );
         }
       })}
     </main>
