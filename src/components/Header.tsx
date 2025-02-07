@@ -1,11 +1,11 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 export function Header() {
   return (
-    <div className="from-pink-50 to-white bg-gradient-to-b p-6">
-      <header className="bg-white/80 shadow-md flex items-center justify-between p-6 rounded-lg container mx-auto shadow-pink-50">
+    <div className="bg-gradient-to-b from-pink-50 to-white p-6">
+      <header className="container mx-auto flex items-center justify-between rounded-lg bg-white/80 p-6 shadow-md shadow-pink-50">
         <Link
-          className="text-pink-700 md:text-xl font-bold tracking-tight"
+          className="font-bold tracking-tight text-pink-700 md:text-xl"
           href="/"
         >
           Layer Caker
@@ -13,7 +13,7 @@ export function Header() {
         <ul className="flex items-center gap-4 font-semibold text-slate-700">
           <li>
             <Link
-              className="hover:text-pink-500 transition-colors"
+              className="transition-colors hover:text-pink-500"
               href="/posts"
             >
               Posts
@@ -21,7 +21,7 @@ export function Header() {
           </li>
           <li>
             <Link
-              className="hover:text-pink-500 transition-colors"
+              className="transition-colors hover:text-pink-500"
               href="/studio"
             >
               Sanity Studio
@@ -30,5 +30,5 @@ export function Header() {
         </ul>
       </header>
     </div>
-  )
+  );
 }

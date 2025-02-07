@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { createDataAttribute } from "next-sanity";
-import { POST_QUERYResult } from "@/sanity/types";
-import { client } from "@/sanity/lib/client";
-import { useOptimistic } from "next-sanity/hooks";
+import Link from 'next/link';
+import { createDataAttribute } from 'next-sanity';
+import { POST_QUERYResult } from '@/sanity/types';
+import { client } from '@/sanity/lib/client';
+import { useOptimistic } from 'next-sanity/hooks';
 
 const { projectId, dataset, stega } = client.config();
 export const createDataAttributeConfig = {
   projectId,
   dataset,
-  baseUrl: typeof stega.studioUrl === "string" ? stega.studioUrl : "",
+  baseUrl: typeof stega.studioUrl === 'string' ? stega.studioUrl : '',
 };
 
 export function RelatedPosts({
@@ -18,12 +18,12 @@ export function RelatedPosts({
   documentId,
   documentType,
 }: {
-  relatedPosts: NonNullable<POST_QUERYResult>["relatedPosts"];
+  relatedPosts: NonNullable<POST_QUERYResult>['relatedPosts'];
   documentId: string;
   documentType: string;
 }) {
   const posts = useOptimistic<
-    NonNullable<POST_QUERYResult>["relatedPosts"] | undefined,
+    NonNullable<POST_QUERYResult>['relatedPosts'] | undefined,
     NonNullable<POST_QUERYResult>
   >(relatedPosts, (state, action) => {
     if (action.id === documentId && action?.document?.relatedPosts) {
@@ -42,18 +42,18 @@ export function RelatedPosts({
       <h2>Related Posts</h2>
       <div className="not-prose text-balance">
         <ul
-          className="flex flex-col sm:flex-row gap-0.5"
+          className="flex flex-col gap-0.5 sm:flex-row"
           data-sanity={createDataAttribute({
             ...createDataAttributeConfig,
             id: documentId,
             type: documentType,
-            path: "relatedPosts",
+            path: 'relatedPosts',
           }).toString()}
         >
           {posts.map((post) => (
             <li
               key={post._key}
-              className="p-4 bg-blue-50 sm:w-1/3 flex-shrink-0"
+              className="flex-shrink-0 bg-blue-50 p-4 sm:w-1/3"
               data-sanity={createDataAttribute({
                 ...createDataAttributeConfig,
                 id: documentId,
