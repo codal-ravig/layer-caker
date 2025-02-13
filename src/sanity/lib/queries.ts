@@ -27,7 +27,8 @@ export const POSTS_SLUGS_QUERY =
   "slug": slug.current
 }`);
 
-export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
+export const POST_QUERY =
+  defineQuery(`*[_type == "post" && slug.current == $slug][0]{
   _id,
   title,
   body,
@@ -51,7 +52,8 @@ export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slu
   }
 }`);
 
-export const PAGE_QUERY = defineQuery(`*[_type == "page" && slug.current == $slug][0]{
+export const PAGE_QUERY =
+  defineQuery(`*[_type == "page" && slug.current == $slug][0]{
   ...,
   "seo": {
     "title": coalesce(seo.title, title, ""),
@@ -114,4 +116,15 @@ export const SITEMAP_QUERY = defineQuery(`
       ),
       _updatedAt
   }
+  `);
+
+export const HEADER_QUERY = defineQuery(`
+  *[_type == "linksBlock" && title == "Header"][0]{
+  title,
+  "link": *[isActive == true]{
+    openInNewTab,
+       title,
+      link
+  }
+}
   `);
