@@ -263,6 +263,34 @@ export type PageBuilder = Array<
     } & Faqs)
 >;
 
+export type Link = {
+  _id: string;
+  _type: 'link';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  link?: string;
+  isActive?: boolean;
+  openInNewTab?: boolean;
+};
+
+export type LinksBlock = {
+  _id: string;
+  _type: 'linksBlock';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  links?: Array<{
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: 'link';
+  }>;
+};
+
 export type Hero = {
   _type: 'hero';
   title?: string;
@@ -673,6 +701,8 @@ export type AllSanitySchemaTypes =
   | Social
   | Seo
   | PageBuilder
+  | Link
+  | LinksBlock
   | Hero
   | Features
   | Faq
@@ -1218,6 +1248,16 @@ export type SITEMAP_QUERYResult = Array<{
   href: string | null;
   _updatedAt: string;
 }>;
+// Variable: HEADER_QUERY
+// Query: *[_type == "linksBlock" && title == "Header"][0]{  title,  "link": *[isActive == true]{    openInNewTab,       title,      link  }}
+export type HEADER_QUERYResult = {
+  title: string | null;
+  link: Array<{
+    openInNewTab: boolean | null;
+    title: string | null;
+    link: string | null;
+  }>;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
@@ -1231,5 +1271,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "redirect" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n': REDIRECTS_QUERYResult;
     '\n  *[_id == $id][0]{\n    title,\n    "image": mainImage.asset->{\n      url,\n      metadata {\n        palette\n      }\n    }\n  }    \n': OG_IMAGE_QUERYResult;
     '\n  *[_type in ["page", "post"] && defined(slug.current)] {\n      "href": select(\n        _type == "page" => "/" + slug.current,\n        _type == "post" => "/posts/" + slug.current,\n        slug.current\n      ),\n      _updatedAt\n  }\n  ': SITEMAP_QUERYResult;
+    '\n  *[_type == "linksBlock" && title == "Header"][0]{\n  title,\n  "link": *[isActive == true]{\n    openInNewTab,\n       title,\n      link\n  }\n}\n  ': HEADER_QUERYResult;
   }
 }

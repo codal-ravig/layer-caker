@@ -15,6 +15,8 @@ import { siteSettingsType } from './siteSettingsType'
 import { seoType } from './seoType';
 import { redirectType } from './redirectType';
 import { socialType } from './socialType';
+import { linkType } from './documents/linkType';
+import { linksBlockType } from './blocks/linksBlockType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -25,13 +27,15 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     faqType,
     featuresType,
     heroType,
+    linksBlockType,
+    linkType,
     pageBuilderType,
     pageType,
     postType,
     redirectType,
     seoType,
     siteSettingsType,
-    splitImageType,
     socialType,
+    splitImageType,
   ],
 };

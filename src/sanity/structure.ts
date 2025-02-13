@@ -12,6 +12,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('page').title('Pages'),
       S.documentTypeListItem('faq').title('FAQs'),
       S.divider(),
+      S.documentTypeListItem('linksBlock').title('Links Blocks'),
       S.listItem()
         .id('siteSettings')
         .schemaType('siteSettings')
@@ -22,7 +23,6 @@ export const structure: StructureResolver = (S) =>
             .schemaType('siteSettings')
             .documentId('siteSettings')
         ),
-
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
@@ -33,6 +33,7 @@ export const structure: StructureResolver = (S) =>
             'page',
             'faq',
             'siteSettings',
+            'linksBlock',
           ].includes(item.getId()!)
       ),
     ]);
